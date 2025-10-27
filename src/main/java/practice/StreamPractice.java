@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
-
 import model.Candidate;
 import model.Cat;
 import model.Person;
@@ -20,11 +19,11 @@ public class StreamPractice {
     public int findMinEvenNumber(List<String> numbers) {
         return numbers.stream()
                 .flatMap(s -> Arrays.stream(s.split(",")))
-                .map(String::trim)
-                .map(Integer::parseInt)
+                .map(s -> Integer.parseInt(s.trim()))
                 .filter(n -> n % 2 == 0)
                 .min(Integer::compareTo)
-                .orElseThrow(() -> new RuntimeException("Can't get min value from list: " + numbers));
+                .orElseThrow(() ->
+                        new RuntimeException("Can't get min value from list: " + numbers));
     }
 
     /**
@@ -50,10 +49,12 @@ public class StreamPractice {
      */
     public List<Person> selectMenByAge(List<Person> peopleList, int fromAge, int toAge) {
         return peopleList.stream()
-                        .filter(p -> p.getSex() == Person.Sex.MAN)
-                        .filter(p -> p.getAge() >= fromAge && p.getAge() <= toAge)
-                        .toList();
+                .filter(p -> p.getSex() == Person.Sex.MAN
+                        && p.getAge() >= fromAge
+                        && p.getAge() <= toAge)
+                .toList();
     }
+
 
     /**
      * Given a List of `Person` instances (having `name`, `age` and `sex` fields),
@@ -69,8 +70,8 @@ public class StreamPractice {
                                           int maleToAge, List<Person> peopleList) {
         return peopleList.stream()
                 .filter(p ->
-                        (p.getSex() == Person.Sex.MAN && p.getAge() >= fromAge && p.getAge() <= maleToAge)
-                                || (p.getSex() == Person.Sex.WOMAN && p.getAge() >= fromAge && p.getAge() <= femaleToAge))
+                    (p.getSex() == Person.Sex.MAN && p.getAge() >= fromAge && p.getAge() <= maleToAge)
+                    || (p.getSex() == Person.Sex.WOMAN && p.getAge() >= fromAge && p.getAge() <= femaleToAge))
                 .toList();
     }
 
