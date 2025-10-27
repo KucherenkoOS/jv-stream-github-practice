@@ -55,7 +55,6 @@ public class StreamPractice {
                 .toList();
     }
 
-
     /**
      * Given a List of `Person` instances (having `name`, `age` and `sex` fields),
      * for example, `Arrays.asList( new Person(«Victor», 16, Sex.MAN),
@@ -70,8 +69,14 @@ public class StreamPractice {
                                           int maleToAge, List<Person> peopleList) {
         return peopleList.stream()
                 .filter(p ->
-                    (p.getSex() == Person.Sex.MAN && p.getAge() >= fromAge && p.getAge() <= maleToAge)
-                    || (p.getSex() == Person.Sex.WOMAN && p.getAge() >= fromAge && p.getAge() <= femaleToAge))
+                    (p.getSex()
+                            == Person.Sex.MAN
+                            && p.getAge() >= fromAge
+                            && p.getAge() <= maleToAge)
+                    || (p.getSex()
+                            == Person.Sex.WOMAN
+                            && p.getAge() >= fromAge
+                            && p.getAge() <= femaleToAge))
                 .toList();
     }
 
