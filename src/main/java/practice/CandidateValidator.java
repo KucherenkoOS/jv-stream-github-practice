@@ -15,18 +15,6 @@ public class CandidateValidator implements Predicate<Candidate> {
             return false;
         }
 
-        if (candidate.getAge() < MAX_AGE) {
-            return false;
-        }
-
-        if (!candidate.isAllowedToVote()) {
-            return false;
-        }
-
-        if (!NATIONALITY_UKRAINIAN.equalsIgnoreCase(candidate.getNationality())) {
-            return false;
-        }
-
         String[] years = candidate.getPeriodsInUkr().split("-");
         if (years.length != PERIOD_PARTS) {
             return false;
@@ -35,7 +23,12 @@ public class CandidateValidator implements Predicate<Candidate> {
         try {
             int from = Integer.parseInt(years[0].trim());
             int to = Integer.parseInt(years[1].trim());
-            return (to - from) >= MIN_YEARS_IN_UKRAINE;
+
+            return candidate.getAge() >= MAX_AGE
+                    && candidate.isAllowedToVote()
+                    && NATIONALITY_UKRAINIAN.equalsIgnoreCase(candidate.getNationality())
+                    && (to - from) >= MIN_YEARS_IN_UKRAINE;
+
         } catch (NumberFormatException e) {
             return false;
         }
